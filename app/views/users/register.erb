@@ -1,0 +1,75 @@
+<%# registeration form%>
+<div class="section grey lighten-5">
+   <div class="container">
+      <div class="row">
+         <div class="col xl4 l6 m10 s12 offset-xl4 offset-l3 offset-m1">
+            <h3 class="light center-align blue-text">Registration form</h3>
+            <div class="card">
+               <div class="card-content">
+                <form method="post" action="/users/register" id="form">
+                  <ul class="stepper linear">
+                     <li class="step active">
+                        <div class="step-title waves-effect waves-dark">Name</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input id="name" name="name" type="text" class="validate" required>
+                                 <label for="name"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                              <button class="waves-effect waves-dark btn blue next-step" >CONTINUE</button>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="step">
+                        <div class="step-title waves-effect waves-dark">Email</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input id="email" name="email" type="email" class="validate" required>
+                                 <label for="email"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                              <button class="waves-effect waves-dark btn blue next-step" data-feedback="email">Continue</button>
+                              <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
+                           </div> 
+                        </div>
+                     </li>
+                     <li class="step">
+                        <div class="step-title waves-effect waves-dark">Password</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input id="password" name="password" type="password" class="validate" required>
+                                 <label for="password"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                              <button class="waves-effect waves-dark btn blue " data-feedback="password" type="submit">Submit</button>
+                              <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
+                           </div>
+                        </div>
+                     </li>
+                  <div class="input-field col s12">
+					<p class="margin center medium-small sign-up">Already have an account? <a href="/users/login">Login</a></p>
+				   </div> 
+                  </ul>
+                </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+// initialize delay upon email input
+function email(destroyFeedback) {
+    setTimeout(function() { destroyFeedback(true); }, 1500);
+}
+
+// initialize stepper
+const loginStepper = document.querySelector('.stepper');
+const stepper = new MStepper(loginStepper);
+</script>

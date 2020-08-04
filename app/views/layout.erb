@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+  <head>
+    <title>TravelWallet</title>
+      <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Stepper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/materialize-stepper@3.1.0/dist/css/mstepper.min.css">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" media="screen,projection" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <body id="home" class="scrollspy">
+    <section id="home" class="scrollspy">
+        <div class="navbar-fixed">
+            <nav class="blue">
+                <div class="container">
+                    <div class="nav-wrapper">
+                        <a href="/" class="brand-logo center">TravelWallet</a>
+                        <a href="" data-target="nav-mobile" class="sidenav-trigger">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a href="/flights">Search Flights</a>
+                            </li>
+                            <li>
+                                <a href="/users/account">Account</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <ul class="sidenav" id="nav-mobile">
+        <li>
+            <a href="/flights">Search Flights</a>
+        </li>
+        <li>
+            <a href="/users/account ">Account</a>
+        </li>
+    </ul>
+
+    <!-- JS -->
+    <script src="https://unpkg.com/materialize-stepper@3.1.0/dist/js/mstepper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js "></script>
+    <script> 
+    const sideNav = document.querySelector('.sidenav');
+        M.Sidenav.init(sideNav, {});
+    </script>
+        <%= yield %>
+  </body>
+</html>

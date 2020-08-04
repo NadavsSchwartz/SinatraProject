@@ -1,0 +1,35 @@
+
+<%# iterate to pull the latest deals based on user input from the database %>
+<%# flight output section%>
+  <section class="section section-icons grey lighten-4 center">
+    <div class="container"  >
+      <div class="row">
+
+      <%# iterate the DB to pull the flights based on user input %>
+        <%  @flights.each do |flight|%>
+        <%# responsiveness on small or medium devices %>
+          <div class="col s12 m4">
+          <%# declaring the type of css design as card-panel %>
+          <div class="card-panel">
+          <%# <%binding.pry%>
+          <i class="material-icons large teal-text">airplanemode_active</i>
+          <%# declaring the title of each card %>
+          <p class="flow-text"><%= flight.origin%> to <%=flight.destination%></p>
+          <%# display the price of current flight from the DB %>
+          <p class="flow-text">Approx price: $<%=flight.cost%></p>
+          <%# currently not working >> should create/add to user profile's wish list flights%>
+          <span>Add to profile</span> <a class="btn-floating waves-effect waves-light red" id="add" ><i class="material-icons disabled">add</i></a>
+          <%# link for current flight on skyscanner for user to get more info and options %>
+          <p><a href="https://www.skyscanner.com/transport/flights/<%=flight.origin_iata_code%>/<%=flight.return_iata_code%>/<%=flight.origin_date%>/rtn=0">or click here for more results.</a></p>
+          <small>Last updated at: <%=flight.updated_at%></small>
+          </div>
+      </div>
+    <% end%>
+    </div>
+  </section>
+  <script> 
+const click = document.getElementById('add')
+click.addEventListener('click', function() {
+  console.log(<%=@user.id %>)
+})  
+</script>

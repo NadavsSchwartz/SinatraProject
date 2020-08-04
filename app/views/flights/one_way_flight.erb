@@ -1,0 +1,94 @@
+
+<%# Flight form Currently support only one way, only 1 person(user)%>
+<div class="section grey lighten-5">
+   <div class="container">
+      <div class="row">
+         <div class="col xl6 l6 m10 s12 offset-xl4 offset-l3 offset-m1">
+            <div class="card">
+               <div class="card-content">
+            <h4 class="light center-align blue-text">One way flight</h4>
+                <form method="post" action="/flights" id="flight-form">
+                  <ul class="stepper linear">
+                     <li class="step active">
+                        <div class="step-title waves-effect waves-dark">Leaving From</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input name="origin" type="text" id="autocomplete-input" class="autocomplete" required>
+                                 <label for="autocomplete-input"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                              <button class="waves-effect waves-dark btn blue next-step" >CONTINUE</button>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="step">
+                        <div class="step-title waves-effect waves-dark">Arriving At</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input name="destination" type="text" id="autocomplete-input" class="autocomplete" required>
+                                 <label for="autocomplete-input"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                              <button class="waves-effect waves-dark btn blue next-step">Continue</button>
+                              <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
+                           </div> 
+                        </div>
+                     </li>
+                     <li class="step">
+                        <div class="step-title waves-effect waves-dark">Leaving On</div>
+                        <div class="step-content">
+                           <div class="row">
+                              <div class="input-field col s12">
+                                 <input id="origin_date:" name="depart_date" type="date" class="validate" required>
+                                 <label for="origin_date:"></label>
+                              </div>
+                           </div>
+                           <div class="step-actions">
+                           <button class="waves-effect waves-dark btn blue" data-feedback="submit" type="submit" >Submit</button>
+                              <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
+                           </div> 
+                        </div>
+                     </li>
+                  </ul>
+                </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+// adds spinning effect ater submitting the form
+function submit(destroyFeedback) {
+    setTimeout(function() { destroyFeedback(true); }, 2500);
+}
+
+
+//   document.addEventListener('DOMContentLoaded', function() {
+   // initialize stepper
+const flightStepper = document.querySelector('.stepper');
+const stepper = new MStepper(flightStepper);
+// initialize the autocomplete
+const elems = document.querySelectorAll('.autocomplete');
+M.Autocomplete.init(elems, {
+   limit: 8,
+   data: {
+      // pulling all the airports from the database
+   <%@airport.all.map do |airport|%>
+      <% if airport.iata_code.split('-')[0].size > 3%>
+      // "beautifying the autocomplete text for the user and verifying its length"
+         "<%= airport.name%> ,<%=airport.iata_code.split('-')[0].chop %>": null,
+         <% else%>
+         "<%= airport.name%> ,<%=airport.iata_code.split('-')[0] %>": null,
+         <%end%>
+    <%end%>
+    }});
+</script>
+
+
+
