@@ -10,8 +10,8 @@ class FlightController < ApplicationController
     origin = params[:origin].split(' ,')[1]
     destination = params[:destination].split(' ,')[1]
     @flights = Flight.get_flight(origin, destination, params[:depart_date])
-    if @flights.nil? || !!@flights['message']
-      flash[:error] = "We Couldn't find any flights. Please go back one page and try again"
+    if @flights['Quotes'].empty? || !!@flights['message']
+      flash[:error] = "We Couldn't find any flights. Please go back and try again"
     else
       flights = Flight.set_flight
       @user = current_user
@@ -39,6 +39,38 @@ class FlightController < ApplicationController
       erb :'flights/edit_flight'
     else
       flash.now[:error] = 'Error occured. please refresh the page and try again.'
+    end
+  end
+
+  post '/flights/:id' do
+    origin = params[:origin].split(' ,')[1]
+    destination = params[:destination].split(' ,')[1]
+    @flights = Flight.get_flight(origin, destination, params[:depart_date])
+    if !!@flights['message'] || @flights['Quotes'].empty?
+      flash[:error] = "We Couldn't find any flights for your updated search flight. Please go back and try again"
+    else
+      set_flight = Flight.set_flight
+      user_flight = Flight.find_by(id: params[:id])
+      user_flight.origin = params[:origin]
+      user_flight.destination = params[:destination]
+      user_flight.origin_date = params[:depart_date]
+      user_flight.cost = set_flight[0]['cost']
+      user_flight.origin_iata_code = set_flight[0]['origin_iata_code']
+      user_flight.return_iata_code = set_flight[0]['return_iata_code']
+      user_flight.save!
+      redirect '/users/account'
+       end
+  end
+
+  get '/flights/delete/:id' do
+    binding.pry
+    if current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
+      @flight = Flight.find(params[:id])
+      @flight.destroy
+      flash.now[:error] = 'Flight deleted.'
+      redirect to '/users/account'
+    else
+      flash.now[:error] = "Error occured. You can not delete a flight that wasn't added to your account."
     end
   end
 end
