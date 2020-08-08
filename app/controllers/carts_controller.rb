@@ -1,2 +1,4 @@
 class CartsController < ApplicationController
+
+
 end

@@ -1,5 +1,40 @@
-<%#greeting user%>
-<h2>Hello, <%= @user.name %>!</h2>
 
-<%#logging out user%>
- <a href="/users/logout ">Logout</a>
+ <p class="flow-text center">Hello, <%= @user.name %>!</p>
+
+<%if @user.flights.empty?%>
+<p class="flow-text center">You don't have any flights saved yet!</p>
+<%else%>
+  <div class="row">
+ <p class="flow-text center">Your flights: <% @user.flights.map do |x| %></p> 
+<div class="col s12 m4 l4">
+ <div class="card xl8">
+    <div class="card-content center">
+      <p class="flow-text">Flight from: <strong ><%=x["origin"]%></strong><br>    To:  <strong><%=x["destination"]%></strong><br> Approx Price:  $<%=x["cost"]%></p>
+    </div>
+    <div class="card-tabs ">
+      <ul class="tabs">
+        <a class="tab col s4" href="/flights/edit/<%=x["id"]%>"><li>edit</li></a>
+        <a class="tab col s4" href="/flights/delete/<%=x["id"]%>"><li>delete</li></a>
+        <a class="tab col s4" href="https://www.skyscanner.com/transport/flights/<%=x.origin_iata_code%>/<%=x.return_iata_code%>/<%=x.origin_date%>/rtn=0" target="_blank"><li>see more options</li></a>
+      </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+      <div id="test4" class="col s12"></div>
+      <div id="test5" class="col s12"></div>
+      <div id="test6" class="col s12"></div>
+    </div>
+  </div>
+  </div>
+  <%end%>
+  </div>
+<%end%>
+<style>
+.tabs {
+    padding-right: 75px;
+}
+
+</style>
+<script>
+    const tabs = document.querySelector('.tabs');
+    const initializeCardPanel = M.Tabs.init(tabs, {});
+</script>

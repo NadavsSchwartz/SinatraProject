@@ -10,12 +10,35 @@ class FlightController < ApplicationController
     origin = params[:origin].split(' ,')[1]
     destination = params[:destination].split(' ,')[1]
     @flights = Flight.get_flight(origin, destination, params[:depart_date])
-    if @flights.nil?
-      redirect to '/flights', error: "We Couldn't find any flight."
+    if @flights.nil? || !!@flights['message']
+      flash[:error] = "We Couldn't find any flights. Please go back one page and try again"
     else
+      flights = Flight.set_flight
       @user = current_user
       @flights = Flight.where(origin_iata_code: origin, return_iata_code: destination)
-      erb :'flights/show_flight'
+      erb :'flights/index'
+    end
+  end
+
+  get '/flights/:id' do
+    @flight = Flight.find_by(id: params[:id])
+    @user = current_user
+    @cart = Cart.new(user_id: @user.id, flight_id: @flight.id)
+    if @cart.save
+      erb :'flights/show'
+    else
+      flash[:error] = 'We encountered a problem.'
+    end
+  end
+
+  get '/flights/edit/:id' do
+    if current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
+      @airport = Airport.all
+      @user = current_user
+      @current_flight = @user.flights.find(params[:id])
+      erb :'flights/edit_flight'
+    else
+      flash.now[:error] = 'Error occured. please refresh the page and try again.'
     end
   end
 end

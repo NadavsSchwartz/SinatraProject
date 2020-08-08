@@ -32,8 +32,6 @@ ActiveRecord::Schema.define(version: 20200803204204) do
     t.text     "origin_date"
     t.text     "depart_time"
     t.text     "arrival_time"
-    t.text     "return_date"
-    t.string   "flight_number"
     t.string   "origin"
     t.string   "destination"
     t.datetime "created_at",       null: false

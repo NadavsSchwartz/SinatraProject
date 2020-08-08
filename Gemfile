@@ -15,7 +15,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'tux'
 gem 'amadeus'
 gem 'httparty'
-
+gem 'rack-flash3'
 
 group :test do
   gem 'rspec'

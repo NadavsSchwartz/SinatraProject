@@ -28,7 +28,13 @@
                                 <a href="/flights">Search Flights</a>
                             </li>
                             <li>
-                                <a href="/users/account">Account</a>
+                                <%if logged_in?%>
+                                <li><a href="/users/account">Profile</a></li>
+                                <li><a href="/users/logout">Sign out</a></li>
+
+                                <%else%>
+                                <a href="/users/login">Sign in</a>
+                                <%end%>
                             </li>
                         </ul>
                     </div>
@@ -41,7 +47,12 @@
             <a href="/flights">Search Flights</a>
         </li>
         <li>
-            <a href="/users/account ">Account</a>
+            <%if logged_in?%>
+                <li><a href="/users/account">Profile</a></li>
+                <li><a href="/users/logout">Sign out</a></li>
+            <%else%>
+                <a href="/users/account">Sign in</a>
+            <%end%>
         </li>
     </ul>
 
@@ -49,6 +60,10 @@
     <script src="https://unpkg.com/materialize-stepper@3.1.0/dist/js/mstepper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js "></script>
     <script> 
+    
+    const dropDown = document.querySelector(".dropdown-trigger");
+    M.Dropdown.init(dropDown);
+
     const sideNav = document.querySelector('.sidenav');
         M.Sidenav.init(sideNav, {});
     </script>

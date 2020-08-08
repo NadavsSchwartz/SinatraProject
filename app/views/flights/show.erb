@@ -1,0 +1,19 @@
+<form method="post" action="cart">
+  <section class="section section-icons grey lighten-4 center">
+    <div class="container"  >
+      <div class="row">
+        <%# responsiveness on small or medium devices %>
+          <div class="col s12 m6 l6">
+          <%# declaring the type of css design as card-panel %>
+          <div class="card-panel">
+          <i class="material-icons large teal-text">airplanemode_active</i>
+          <%# declaring the title of each card %>
+          <p class="flow-text"><%= @flight.origin%> (<%=@flight.origin_iata_code%>)<br> To <br><%=@flight.destination%> (<%=@flight.return_iata_code%>)</p>
+          <%# display the price of current flight from the DB %>
+          <p class="flow-text">Has been added to your wallet.</p>
+          
+          </div>
+      </div>
+    </div>
+  </section>
+</form>

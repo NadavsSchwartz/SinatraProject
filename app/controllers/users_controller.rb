@@ -15,7 +15,6 @@ class UsersController < ApplicationController
       # redirect to '/register'
     else
       @user = User.create(name: params[:name], email: params[:email], password: params[:password])
-      @user.save
       redirect to '/users/login'
     end
   end
@@ -31,13 +30,13 @@ class UsersController < ApplicationController
 
   post '/users/login' do
     @user = User.find_by(email: params[:email])
-    if !@user.nil? && @user.password = params[:password]
+    if @user&.authenticate(params[:password].to_s)
       session[:user_id] = @user.id
       redirect to '/users/account'
     else
-      flash[:error] = 'No account found. please try again'
-
-    end
+      flash[:notice] = 'The post was successfully created'
+      redirect 'users/login', notice: 'The post was successfully created'
+   end
   end
 
   get '/users/account' do

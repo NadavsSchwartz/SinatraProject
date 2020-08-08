@@ -1,5 +1,4 @@
 
-<%# Flight form Currently support only one way, only 1 person(user)%>
 <div class="section grey lighten-5">
    <div class="container">
       <div class="row">
@@ -7,14 +6,14 @@
             <div class="card">
                <div class="card-content">
             <h4 class="light center-align blue-text">One way flight</h4>
-                <form method="post" action="/flights" >
+                <form method="post" action="/flights/<%=@current_flight.id%>" >
                   <ul class="stepper linear">
                      <li class="step active">
                         <div class="step-title waves-effect waves-dark">Leaving From</div>
                         <div class="step-content">
                            <div class="row">
                               <div class="input-field col s12">
-                                 <input name="origin" type="text" id="autocomplete-input" class="autocomplete" required>
+                                 <input name="origin" value="<%=@current_flight.origin%>" type="text" id="autocomplete-input" class="autocomplete" required>
                                  <label for="autocomplete-input"></label>
                               </div>
                            </div>
@@ -28,7 +27,7 @@
                         <div class="step-content">
                            <div class="row">
                               <div class="input-field col s12">
-                                 <input name="destination" type="text" id="autocomplete-input" class="autocomplete" required>
+                                 <input name="destination" value="<%=@current_flight.destination%>" type="text" id="autocomplete-input" class="autocomplete" required>
                                  <label for="autocomplete-input"></label>
                               </div>
                            </div>
@@ -43,8 +42,8 @@
                         <div class="step-content">
                            <div class="row">
                               <div class="input-field col s12">
-                                 <input id="origin_date:" name="depart_date" type="date" class="validate" required>
-                                 <label for="origin_date:"></label>
+                                 <input id="origin_date" name="depart_date" value="<%=@current_flight.origin_date%>" type="date" class="validate" required>
+                                 <label for="origin_date"></label>
                               </div>
                            </div>
                            <div class="step-actions">
@@ -67,6 +66,7 @@
    // initialize stepper
       const flightStepper = document.querySelector('.stepper');
       const stepper = new MStepper(flightStepper);
+      
 // initialize the autocomplete
       const ac = document.querySelectorAll('.autocomplete');
       M.Autocomplete.init(ac, {
@@ -83,6 +83,3 @@
     <%end%>
     }});
 </script>
-
-
-

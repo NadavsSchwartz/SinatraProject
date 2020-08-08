@@ -2,8 +2,8 @@ require 'httparty'
 require 'sinatra'
 require 'sinatra/flash'
 class Flight < ActiveRecord::Base
-  belongs_to :cart
-  belongs_to :user
+  has_many :carts
+  has_many :users, through: :carts
   # get request to skyscanner to pull info based on user input.
   # to do: remove iteration from this file and refactor it, too ugly.
   def self.get_flight(origin, destination, origin_date, destination_date = '')
@@ -12,33 +12,28 @@ class Flight < ActiveRecord::Base
                              'X-RapidAPI-Host' => 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
                              'X-RapidAPI-Key' => '04ffdca11fmsh6d2319daea4c209p172278jsn9b371a9115f8'
                            }
-    # checking if originId matches the originId from the user's input, otherwise switching it. (at times api response switches between origin and return iata_code)
-    # to do: find a better logic, and find a way to update existing flight if outdated
-    if !@flight['Quotes'].nil? && @flight['Quotes'][0]['OutboundLeg']['OriginId'] == @flight['Places'][0]['PlaceId']
-      @flight['Quotes'].each do |quote|
-        Flight.find_or_create_by(
-          origin_date: quote['OutboundLeg']['DepartureDate'].split('T')[0],
-          cost: quote['MinPrice'],
-          origin: @flight['Places'][0]['Name'],
-          destination: @flight['Places'][1]['Name'],
-          origin_iata_code: @flight['Places'][0]['IataCode'],
-          return_iata_code: @flight['Places'][1]['IataCode']
-        )
-      end
-    elsif @flight['Quotes'][0]['OutboundLeg']['OriginId'] == @flight['Places'][1]['PlaceId']
-      @flight['Quotes'].each do |quote|
-        Flight.find_or_create_by(
-          origin_date: quote['OutboundLeg']['DepartureDate'].split('T')[0],
-          cost: quote['MinPrice'],
-          origin: @flight['Places'][1]['Name'],
-          destination: @flight['Places'][0]['Name'],
-          origin_iata_code: @flight['Places'][1]['IataCode'],
-          return_iata_code: @flight['Places'][0]['IataCode']
-        )
-      end
-    else
-      puts "We couldn't find any flights."
-      # redirect to '/flight'
+                            # checking if originId matches the originId from the user's input, otherwise switching it. (at times api response switches between origin and return iata_code)
+                            # to do: find a better logic, and find a way to update existing flight if outdated
+                          end
+
+  def self.set_flight
+    origin_id = @flight['Quotes'][0]['OutboundLeg']['OriginId']
+    place_id = @flight['Places'][1]['PlaceId']
+    origin_i = 1
+    place_i = 0
+    if origin_id != place_id
+      origin_i = 0
+      place_i = 1
     end
-end
+    @flight['Quotes'].map do |quote|
+      Flight.find_or_create_by(
+        origin_date: quote['OutboundLeg']['DepartureDate'].split('T')[0],
+        cost: quote['MinPrice'],
+        origin: @flight['Places'][origin_i]['Name'],
+        destination: @flight['Places'][place_i]['Name'],
+        origin_iata_code: @flight['Places'][origin_i]['IataCode'],
+        return_iata_code: @flight['Places'][place_i]['IataCode']
+      )
+    end
+  end
 end
