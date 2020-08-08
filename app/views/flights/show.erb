@@ -1,4 +1,4 @@
-<form method="post" action="cart">
+<form method="post" action="/flight/<%=@flight.id%>">
   <section class="section section-icons grey lighten-4 center">
     <div class="container"  >
       <div class="row">
@@ -8,9 +8,11 @@
           <div class="card-panel">
           <i class="material-icons large teal-text">airplanemode_active</i>
           <%# declaring the title of each card %>
-          <p class="flow-text"><%= @flight.origin%> (<%=@flight.origin_iata_code%>)<br> To <br><%=@flight.destination%> (<%=@flight.return_iata_code%>)</p>
+          <p class="flow-text">The flight from: <strong><%= @flight.origin%></strong> </p>
+          <p class="flow-text">To: <strong><%=@flight.destination%></strong></p>
           <%# display the price of current flight from the DB %>
           <p class="flow-text">Has been added to your wallet.</p>
+          <a class="btn" href="/users/account">My Profile </a>
           
           </div>
       </div>
