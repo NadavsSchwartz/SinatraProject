@@ -5,7 +5,7 @@
     <div class="container"  >
       <div class="row">
       <%# iterate the DB to pull the flights based on user input %>
-        <%  @flights.map do |flight|%>
+        <%  @flights.order(:cost).map do |flight|%>
           <form method="post" action="flights/<%=flight.id%>">
         <%# responsiveness on small or medium devices %>
           <div class="col s12 m6 l6">

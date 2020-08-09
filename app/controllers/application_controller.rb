@@ -12,6 +12,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
+    @flight = Flight.last(12)
     if !logged_in?
       erb :index
     else

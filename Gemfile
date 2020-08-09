@@ -16,6 +16,7 @@ gem 'tux'
 gem 'amadeus'
 gem 'httparty'
 gem 'rack-flash3'
+gem 'unsplash'
 
 group :test do
   gem 'rspec'
