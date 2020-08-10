@@ -1,7 +1,7 @@
 class FlightController < ApplicationController
   get '/flights' do
     # pulls all airport data from db
-    @airport = Airport.all
+    @airport = Airports.all
     erb :'flights/one_way_flight'
   end
 
@@ -51,7 +51,7 @@ class FlightController < ApplicationController
     if current_user.nil? || !current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
     else
-      @airport = Airport.all
+      @airport = Airports.all
       @current_flight = current_user.flights.find(params[:id])
       erb :'flights/edit_flight'
     end

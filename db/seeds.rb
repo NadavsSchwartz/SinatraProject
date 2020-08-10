@@ -7,4 +7,4 @@ states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 
 'Wyoming',]
 
-states.each {|state| Airport.get_airport(state)}
+states.each {|state| Airports.get_airport(state)}
