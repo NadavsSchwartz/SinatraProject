@@ -7,11 +7,13 @@ gem 'sinatra-flash'
 gem 'sinatra-redirect-with-flash'
 gem 'rake'
 gem 'require_all'
-gem 'sqlite3', '~> 1.3.6'
 gem 'thin'
 gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
-gem 'rack-flash3'
 gem 'unsplash'
 gem 'puma'
 gem 'pg'
+
+group :development do
+gem 'sqlite3'
+end
