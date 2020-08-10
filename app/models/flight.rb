@@ -1,22 +1,19 @@
 require 'httparty'
-require 'sinatra'
-require 'sinatra/flash'
 class Flight < ActiveRecord::Base
   has_many :carts
   has_many :users, through: :carts
   # get request to skyscanner to pull info based on user input.
-  # to do: remove iteration from this file and refactor it, too ugly.
   def self.get_flight(origin, destination, origin_date, destination_date = '')
     @flight = HTTParty.get "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/#{origin}/#{destination}/#{origin_date}?inboundpartialdate=#{destination_date}",
                            headers: {
                              'X-RapidAPI-Host' => 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
                              'X-RapidAPI-Key' => '04ffdca11fmsh6d2319daea4c209p172278jsn9b371a9115f8'
                            }
-                            # checking if originId matches the originId from the user's input, otherwise switching it. (at times api response switches between origin and return iata_code)
-                            # to do: find a better logic, and find a way to update existing flight if outdated
-                          end
+                                                      end
 
   def self.set_flight
+    # checking if originId matches the originId from the user's input, otherwise switching it.
+    #(at times api response switches between origin and return iata_code)
     origin_id = @flight['Quotes'][0]['OutboundLeg']['OriginId']
     place_id = @flight['Places'][1]['PlaceId']
     origin_i = 1

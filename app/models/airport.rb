@@ -1,6 +1,5 @@
 class Airport < ActiveRecord::Base
-  # TODO: implement better logic + remove iteration from here
-  # todo
+
   def self.get_airport(city_name)
     airport = HTTParty.get "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/usd/en-GB/?query=#{city_name}",
                            headers: {

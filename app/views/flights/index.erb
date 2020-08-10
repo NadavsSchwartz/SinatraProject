@@ -1,25 +1,28 @@
 
-<%# iterate to pull the latest deals based on user input from the database %>
 <%# flight output section%>
 
   <section class="section section-icons grey lighten-4 center">
     <div class="container"  >
       <div class="row">
-      <%# iterate the DB to pull the flights based on user input %>
+      <%# iterate the DB to pull the flights based on user input order by price ASC%>
         <%  @flights.order(:cost).map do |flight|%>
           <form method="post" action="flights/<%=flight.id%>">
         <%# responsiveness on small or medium devices %>
           <div class="col s12 m6 l6">
           <%# declaring the type of css design as card-panel %>
           <div class="card-panel">
-          <%# <%binding.pry%>
+          <%# declaring the airplane icon built it in materialize %>
           <i class="material-icons large teal-text">airplanemode_active</i>
-          <%# declaring the title of each card %>
+          <%# Flight origin and destination iatacode as title %>
           <p class="flow-text"><%= flight.origin_iata_code%> to <%=flight.return_iata_code%></p>
-          <%# display the price of current flight from the DB %>
+          <%# display the price of current flight %>
           <p class="flow-text">Approx price: $<%=flight.cost%></p>
-          <%# currently not working >> should create/add to user profile's wish list flights%>
+          <%# Let you add the flight if you're logged in%>
+          <% if logged_in?%>
           <span>Add to profile</span> <button class="btn-floating waves-effect waves-light red" id="add" type="submit" ><i class="material-icons disabled">add</i></button><br><br>
+          <%else%>
+          <span><a class="btn-floating waves-effect waves-light" href="/users/login">Login</a>  to save the flight</span><br><br>
+          <%end%>
           <small>Last updated at: <%=flight.updated_at%></small> 
 
           </div>

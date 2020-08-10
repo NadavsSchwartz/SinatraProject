@@ -6,23 +6,28 @@ class FlightController < ApplicationController
   end
 
   post '/flights' do
-    # TODO: find a way to make it work with any user input, too hard coded.
+    # Edits user input from autocomplete to match data requirements for the api
     origin = params[:origin].split(' ,')[1]
     destination = params[:destination].split(' ,')[1]
+
+    # Gets the flight data from api & validate it
     @flights = Flight.get_flight(origin, destination, params[:depart_date])
     if @flights['ValidationErrors'] || !!@flights['message']
       flash[:error] = "We Couldn't find any flights. Please go back and try again"
     elsif @flights['Quotes'].empty?
       flash[:error] = 'The search came empty. Please go back and try again'
     else
+      # set flight in the DB if passed validation test
       flights = Flight.set_flight
       @user = current_user
+      # pull the flight based on params
       @flights = Flight.where(origin_iata_code: origin, return_iata_code: destination)
       erb :'flights/index'
     end
   end
 
   post '/flights/:id' do
+    # Just a precaution validation on top of changing it to POST from GET to avoid user accesing the data
     if current_user.nil? || @flight = Flight.find_by(id: params[:id]).nil?
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
     else
@@ -34,6 +39,7 @@ class FlightController < ApplicationController
   end
 
   get '/flights/edit/:id' do
+    # validate if user is logged in and if flight exists in user's profile
     if current_user.nil? || !current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
     else
@@ -44,11 +50,14 @@ class FlightController < ApplicationController
   end
 
   post '/flights/update/:id' do
+    # update flight directly from user profile and update the card with links & info
     origin = params[:origin].split(' ,')[1]
     destination = params[:destination].split(' ,')[1]
     @flights = Flight.get_flight(origin, destination, params[:depart_date])
-    if !!@flights['message'] || @flights['Quotes'].empty?
-      flash[:error] = "We Couldn't find any flights for your updated search flight. Please go back and try again"
+    if @flights['ValidationErrors'] || !!@flights['message']
+      flash[:error] = "We Couldn't find any flights With that input. Please go back and try again"
+    elsif @flights['Quotes'].empty?
+      flash[:error] = 'The search came empty. Please go back and try again'
     else
       set_flight = Flight.set_flight
       user_flight = Flight.find_by(id: params[:id])
@@ -60,10 +69,11 @@ class FlightController < ApplicationController
       user_flight.return_iata_code = set_flight[0]['return_iata_code']
       user_flight.save!
       redirect '/users/account'
-       end
+        end
   end
 
   get '/flights/delete/:id' do
+    #validate that user is logged in & added the flight to his account & hasn't deleted it already
     if !logged_in?
       flash[:error] = 'You need to be logged in, in order to edit/delete flights'
     else
@@ -77,7 +87,7 @@ class FlightController < ApplicationController
           flash.now[:error] = 'You already deleted that flight from your account.'
         end
       else
-        flash.now[:error] = "Error occured. You can not delete a flight that doesn't exist in your profile account."
+        flash.now[:error] = "Error occured. You can not delete a flight that doesn't exist in your profile."
         end
     end
   end
