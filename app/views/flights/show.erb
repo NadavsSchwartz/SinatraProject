@@ -1,21 +1,23 @@
-<form method="post" action="/flight/<%=@flight.id%>">
   <section class="section section-icons grey lighten-4 center">
     <div class="container"  >
       <div class="row">
         <%# responsiveness on small or medium devices %>
-          <div class="col s12 m6 l6">
+        <div class="col xl8 l8 m10 s12 offset-xl2 offset-l3 offset-m1">
           <%# declaring the type of css design as card-panel %>
           <div class="card-panel">
           <i class="material-icons large teal-text">airplanemode_active</i>
           <%# declaring the title of each card %>
-          <p class="flow-text">The flight from: <strong><%= @flight.origin%></strong> </p>
+          <p class="flow-text">From: <strong><%= @flight.origin%></strong> </p>
           <p class="flow-text">To: <strong><%=@flight.destination%></strong></p>
-          <%# display the price of current flight from the DB %>
-          <p class="flow-text">Has been added to your wallet.</p>
-          <a class="btn" href="/users/account">My Profile </a>
-          
+          <p class="flow-text">Approx price: $<%=@flight.cost%></p>
+          <%# Let you add the flight if you're logged in%>
+          <% if logged_in?%>
+          <span>Add to profile</span> <button class="btn-floating waves-effect waves-light red" id="add" type="submit" ><i class="material-icons disabled">add</i></button><br><br>
+          <%else%>
+          <span><a class="btn-floating waves-effect waves-light" href="/users/login">Login</a>  to save the flight</span><br><br>
+          <%end%>
+          <small>Last updated at: <%=@flight.updated_at%></small> 
           </div>
       </div>
     </div>
   </section>
-</form>

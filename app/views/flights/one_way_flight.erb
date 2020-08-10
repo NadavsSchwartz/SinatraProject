@@ -33,8 +33,8 @@
                         <div class="step-content">
                            <div class="row">
                               <div class="input-field col s12">
-                                 <input name="destination" type="text" id="autocomplete-input" class="autocomplete" required>
-                                 <label for="autocomplete-input"></label>
+                                 <input name="destination" type="text" id="autocomplete-input2" class="autocomplete" required>
+                                 <label for="autocomplete-input2"></label>
                               </div>
                            </div>
                            <%# Action buttons - Moves to the next/back "step" on click.%>
@@ -54,7 +54,7 @@
                               </div>
                            </div>
                            <div class="step-actions">
-                           <button class="waves-effect waves-dark btn blue" data-feedback="submit" type="submit" >Submit</button>
+                           <button class="waves-effect waves-dark btn blue" type="submit" >Submit</button>
                               <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
                            </div> 
                         </div>
@@ -68,16 +68,15 @@
    </div>
 </div>
 <script>
-   //  document.addEventListener('DOMContentLoaded', function() {
+   //   document.addEventListener('DOMContentLoaded', function() {
    // initialize stepper
       const flightStepper = document.querySelector('.stepper');
       const stepper = new MStepper(flightStepper);
 // initialize the autocomplete
       const ac = document.querySelectorAll('.autocomplete');
       const instance = M.Autocomplete.init(ac, {
-         // Limit the autocomplete results to 8 and start enable it without any input for user conveniece
+         // Limit the autocomplete results to 8 results
    limit: 8,
-   minLength: 0,
    data: {
       // iterating over all the airports from the database
       <%@airport.all.map do |airport|%>
@@ -88,7 +87,18 @@
          "<%= airport.name%> ,<%=airport.iata_code.split('-')[0] %>": null,
          <%end%>
     <%end%>
-    }});
+    },
+      onAutocomplete: function() {}});
+      
+     
+           // Checking for existing airport
+           document.querySelector('#autocomplete-input').addEventListener('keyup',function(){
+          if ( instance[0].count === 0 ) {
+            document.querySelector('#autocomplete-input').value = '';
+          }
+      });
+      
+      // });
 
 </script>
 

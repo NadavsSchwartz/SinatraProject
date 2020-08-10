@@ -26,6 +26,14 @@ class FlightController < ApplicationController
     end
   end
 
+  get '/flights/:id' do
+    @flight = Flight.find_by(id: params[:id])
+    if !!@flight
+      erb :'flights/show'
+    else
+      flash.now[:error] = "That flight doesn't exist!, Please go back and try again :)"
+    end
+  end
   post '/flights/:id' do
     # Just a precaution validation on top of changing it to POST from GET to avoid user accesing the data
     if current_user.nil? || @flight = Flight.find_by(id: params[:id]).nil?
@@ -34,7 +42,7 @@ class FlightController < ApplicationController
       @user = current_user
       @flight = Flight.find_by(id: params[:id])
       @cart = Cart.find_or_create_by(user_id: @user.id, flight_id: @flight.id)
-      erb :'flights/show' if @cart.save
+      erb :'flights/add_to_profile' if @cart.save
     end
   end
 
@@ -73,7 +81,7 @@ class FlightController < ApplicationController
   end
 
   get '/flights/delete/:id' do
-    #validate that user is logged in & added the flight to his account & hasn't deleted it already
+    # validate that user is logged in & added the flight to his account & hasn't deleted it already
     if !logged_in?
       flash[:error] = 'You need to be logged in, in order to edit/delete flights'
     else
