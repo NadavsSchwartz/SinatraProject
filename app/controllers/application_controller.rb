@@ -11,8 +11,17 @@ class ApplicationController < Sinatra::Base
     register Sinatra::Flash
   end
 
+  error Sinatra::NotFound do
+    content_type 'text/plain'
+    [404, "couldn't find the page you were looking for because it doesn't exist.
+
+Return to the homepage
+
+Error code: 404"]
+  end
+
   get '/' do
-    @flight = Flight.last(12)
+    @flights = Flight.last(12)
     if !logged_in?
       erb :index
     else

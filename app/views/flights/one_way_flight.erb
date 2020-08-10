@@ -63,14 +63,15 @@
    </div>
 </div>
 <script>
-   // document.addEventListener('DOMContentLoaded', function() {
+   //  document.addEventListener('DOMContentLoaded', function() {
    // initialize stepper
       const flightStepper = document.querySelector('.stepper');
       const stepper = new MStepper(flightStepper);
 // initialize the autocomplete
       const ac = document.querySelectorAll('.autocomplete');
-      M.Autocomplete.init(ac, {
+      const instance = M.Autocomplete.init(ac, {
    limit: 8,
+   minLength: 0,
    data: {
       // pulling all the airports from the database
       <%@airport.all.map do |airport|%>
@@ -81,7 +82,17 @@
          "<%= airport.name%> ,<%=airport.iata_code.split('-')[0] %>": null,
          <%end%>
     <%end%>
-    }});
+    },
+    onAutocomplete: function() {
+       if (ac.value == data)
+       console.log (e)
+       else
+       console.log('false')
+    }
+    });
+
+
+   //  ;
 </script>
 
 

@@ -1,1 +1,31 @@
+<p class="flow-text center" >Latest Flights:</p>
+  <section class="section section-icons grey lighten-4 center">
+    <div class="container"  >
+      <div class="row">
+      <%# iterate the DB to pull the flights based on user input %>
+        <%  @flights.map do |flight|%>
+          <form method="post" action="flights/<%=flight.id%>">
+        <%# responsiveness on small or medium devices %>
+          <div class="col s12 m6 l6">
+          <%# declaring the type of css design as card-panel %>
+          <div class="card-panel">
+          <%# <%binding.pry%>
+          <i class="material-icons large teal-text">airplanemode_active</i>
+          <%# declaring the title of each card %>
+          <p class="flow-text"><%= flight.origin_iata_code%> to <%=flight.return_iata_code%></p>
+          <%# display the price of current flight from the DB %>
+          <p class="flow-text">Approx price: $<%=flight.cost%></p>
+          <%# currently not working >> should create/add to user profile's wish list flights%>
+          <% if logged_in?%>
+          <span>Add to profile</span> <button class="btn-floating waves-effect waves-light red" id="add" type="submit" ><i class="material-icons disabled">add</i></button><br><br>
+          <%else%>
+          <span><a class="btn-floating waves-effect waves-light" href="/users/login">Login</a>  to save the flight</span><br><br>
+          <%end%>
+          <small>Last updated at: <%=flight.updated_at%></small> 
 
+          </div>
+      </div>
+      </form>
+    <% end%>
+    </div>
+  </section>
