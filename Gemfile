@@ -11,7 +11,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
 gem 'unsplash'
 gem 'puma'
- gem 'pg', '~> 0.20'
+gem 'pg', '~> 0.20'
 
 
 group :development do
