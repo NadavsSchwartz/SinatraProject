@@ -15,5 +15,5 @@ gem 'pg', '~> 0.20'
 
 
 group :development do
-gem 'sqlite3'
+gem 'sqlite3', '~>1.4.2'
 end
