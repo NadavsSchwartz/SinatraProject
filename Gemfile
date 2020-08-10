@@ -12,5 +12,8 @@ gem 'httparty'
 gem 'unsplash'
 gem 'puma'
 gem 'pg', '~> 0.20'
-gem 'sqlite3', '~>1.4.2'
 
+
+group :development do
+gem 'sqlite3', '~>1.4.2'
+end

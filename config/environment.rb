@@ -2,7 +2,7 @@ require 'bundler/setup'
 Bundler.require(:default, 'development')
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || {
-                                          adapter: 'sqlite3',
+                                          adapter: 'postgresql',
                                           database: 'db/development.sqlite'
                                         })
 
