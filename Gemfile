@@ -11,8 +11,11 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'httparty'
 gem 'unsplash'
 gem 'puma'
-gem 'pg'
 
 group :development do
 gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
 end
