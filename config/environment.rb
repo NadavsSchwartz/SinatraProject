@@ -1,9 +1,11 @@
+ENV['SINATRA_ENV'] ||= 'development'
+
 require 'bundler/setup'
-Bundler.require(:default, 'development')
+Bundler.require(:default, ENV['SINATRA_ENV'])
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || {
                                           adapter: 'postgresql',
-                                          database: 'db/development.sqlite'
+                                          database: "db/#{ENV['SINATRA_ENV']}.sqlite"
                                         })
 
 require './app/controllers/application_controller'
