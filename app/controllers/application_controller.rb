@@ -20,6 +20,15 @@ Return to the homepage
 Error code: 404"]
   end
 
+  get '' do
+    @flights = Flight.last(12)
+    if !logged_in?
+      erb :index
+    else
+      @user = current_user
+      erb :index
+    end
+  end
   get '/' do
     @flights = Flight.last(12)
     if !logged_in?
