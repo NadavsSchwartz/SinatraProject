@@ -32,6 +32,9 @@ Error code: 404"]
   get '/' do
     redirect to '/home'
   end
+  get '' do
+    redirect to '/home'
+  end
   helpers do
     def logged_in?
       !!session[:user_id]
