@@ -84,11 +84,12 @@
     <%end%>
     },
       onAutocomplete: function() {}});
-      
-     
-           // Checking for existing airport
+           // Checking for user input VS airport data
            document.querySelector('#autocomplete-input').addEventListener('keyup',function(){
           if ( instance[0].count === 0 ) {
+            document.querySelector('#autocomplete-input').value = '';
+          }
+          if ( instance[1].count === 0 ) {
             document.querySelector('#autocomplete-input').value = '';
           }
       });
