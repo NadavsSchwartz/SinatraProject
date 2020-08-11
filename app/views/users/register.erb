@@ -2,7 +2,7 @@
 <div class="section grey lighten-5">
    <div class="container">
       <div class="row">
-         <div class="col xl6 l6 m10 s12 offset-xl3 offset-l3 offset-m1">
+         <div class="col xl4 l6 m10 s12 offset-xl4 offset-l3 offset-m1">
             <h3 class="light center-align blue-text">Registration form</h3>
             <div class="card">
                <div class="card-content">
@@ -47,7 +47,7 @@
                               </div>
                            </div>
                            <div class="step-actions">
-                              <button class="waves-effect waves-dark btn blue " type="submit">Submit</button>
+                              <button class="waves-effect waves-dark btn blue " data-feedback="password" type="submit">Submit</button>
                               <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
                            </div>
                         </div>
@@ -64,10 +64,12 @@
    </div>
 </div>
 <script>
+// initialize delay upon email input
 function email(destroyFeedback) {
     setTimeout(function() { destroyFeedback(true); }, 1500);
 }
-// initialize Materialize stepper
-const registerStepper = document.querySelector('.stepper');
-const stepper = new MStepper(registerStepper);
+
+// initialize stepper
+const loginStepper = document.querySelector('.stepper');
+const stepper = new MStepper(loginStepper);
 </script>

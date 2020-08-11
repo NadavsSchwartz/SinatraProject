@@ -4,14 +4,11 @@
 <div class="section grey lighten-5">
    <div class="container">
       <div class="row">
-      <%# Centering the flight form throughout window sizesFlight Form%>
-         <div class="col xl6 l6 m10 s12 offset-xl3 offset-l3 offset-m1">
+         <div class="col xl6 l6 m10 s12 offset-xl4 offset-l3 offset-m1">
             <div class="card">
                <div class="card-content">
-                     <%# Centering the flight form Title%>
             <h4 class="light center-align blue-text">One way flight</h4>
                 <form method="post" action="/flights" >
-                <%# Declaring a stepper class for the Materialize Stepper Form to be initialized.%>
                   <ul class="stepper linear">
                      <li class="step active">
                         <div class="step-title waves-effect waves-dark">Leaving From</div>
@@ -22,7 +19,6 @@
                                  <label for="autocomplete-input"></label>
                               </div>
                            </div>
-                           <%# Action button - Moves to the next "step" on click.%>
                            <div class="step-actions">
                               <button class="waves-effect waves-dark btn blue next-step" >CONTINUE</button>
                            </div>
@@ -37,7 +33,6 @@
                                  <label for="autocomplete-input2"></label>
                               </div>
                            </div>
-                           <%# Action buttons - Moves to the next/back "step" on click.%>
                            <div class="step-actions">
                               <button class="waves-effect waves-dark btn blue next-step">Continue</button>
                               <button class="waves-effect waves-dark btn-flat previous-step" >BACK</button>
@@ -78,10 +73,10 @@
          // Limit the autocomplete results to 8 results
    limit: 8,
    data: {
-      // iterating over all the airports from the database
+      // pulling all the airports from the database
       <%@airport.all.map do |airport|%>
       <% if airport.iata_code.split('-')[0].size > 3%>
-      // "beautifying the airport data verifying its length(iata_code must be 3 letters)"
+      // "beautifying the autocomplete text for the user and verifying its length"
          "<%= airport.name%> ,<%=airport.iata_code.split('-')[0].chop %>": null,
          <% else%>
          "<%= airport.name%> ,<%=airport.iata_code.split('-')[0] %>": null,
@@ -100,6 +95,8 @@
       
       // });
 
+
+   //  ;
 </script>
 
 

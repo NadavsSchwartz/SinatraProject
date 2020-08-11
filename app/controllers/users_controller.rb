@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   get '/users/register' do
     if logged_in?
+      flash.now[:error] = "You're already logged in "
       redirect to '/users/account'
     else
       erb :'users/register'
