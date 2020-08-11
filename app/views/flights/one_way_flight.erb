@@ -63,7 +63,7 @@
    </div>
 </div>
 <script>
-   //   document.addEventListener('DOMContentLoaded', function() {
+
    // initialize stepper
       const flightStepper = document.querySelector('.stepper');
       const stepper = new MStepper(flightStepper);
@@ -82,22 +82,12 @@
          "<%= airport.name%> ,<%=airport.iata_code.split('-')[0] %>": null,
          <%end%>
     <%end%>
-    },
-      onAutocomplete: function() {}});
-           // Checking for user input VS airport data
-           document.querySelector('#autocomplete-input').addEventListener('keyup',function(){
-          if ( instance[0].count === 0 ) {
-            document.querySelector('#autocomplete-input').value = '';
-          }
-          if ( instance[1].count === 0 ) {
-            document.querySelector('#autocomplete-input').value = '';
-          }
-      });
+    }
       
-      // });
+    });
 
 
-   //  ;
+   
 </script>
 
 
