@@ -22,7 +22,7 @@ class FlightController < ApplicationController
   end
 
   get '/flights/:id' do
-    @flight = Flight.find_by(id: params[:id])
+    @flight = find_flight_by_id
     if !!@flight
       erb :'flights/show'
     else
@@ -30,11 +30,11 @@ class FlightController < ApplicationController
     end
   end
   post '/flights/:id' do
-    if current_user.nil? || @flight = Flight.find_by(id: params[:id]).nil?
+    if current_user.nil? || @flight = find_flight_by_id.nil?
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
     else
       @user = current_user
-      @flight = Flight.find_by(id: params[:id])
+      @flight = find_flight_by_id
       @cart = Cart.find_or_create_by(user_id: @user.id, flight_id: @flight.id)
       erb :'flights/add_to_profile' if @cart.save
     end
@@ -58,7 +58,7 @@ class FlightController < ApplicationController
       flash[:error] = "We Couldn't find any flights for your updated search flight. Please go back and try again"
     else
       set_flight = Flight.set_flight
-      user_flight = Flight.find_by(id: params[:id])
+      user_flight = find_flight_by_id
       user_flight.origin = params[:origin]
       user_flight.destination = params[:destination]
       user_flight.origin_date = params[:depart_date]
@@ -77,7 +77,7 @@ class FlightController < ApplicationController
     else
       if current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
         if current_user.flights.ids.include? params[:id].to_i
-          flight = Flight.find_by(id: params[:id])
+          flight = find_flight_by_id
           flight.destroy
           flash.now[:error] = 'Flight deleted.'
           redirect to '/users/account'

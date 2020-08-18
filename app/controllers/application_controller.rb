@@ -41,8 +41,8 @@ Error code: 404"]
       User.find_by(id: session[:user_id])
     end
 
-    def find_user_by_id
-      User.find_by_id(params[:id])
+    def find_flight_by_id
+      Flight.find_by(id: params[:id])
     end
 
     def set_session
