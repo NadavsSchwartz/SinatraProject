@@ -1,4 +1,4 @@
-#TravelWallet  
+##TravelWallet  
 
 ## Overview
 The theme for the project is a flight search engine with user functionality, where you can add flights to your profile for easy tracking.
