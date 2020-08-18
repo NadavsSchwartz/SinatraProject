@@ -1,4 +1,4 @@
-TravelWallet - A basic one Sinatra project for Learn.co
+TravelWallet - A basic Sinatra project for Learn.co
 
 The theme for the project is a flight search engine with user functionality, where you can add flights to your profile for easy tracking.
 
