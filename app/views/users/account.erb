@@ -22,11 +22,13 @@
     <div class="card-tabs center">
       <ul class="tabs">
         <a class="tab col s1" href="/flights/edit/<%=x["id"]%>"><li>edit</li></a>
-        <a class="tab col s3" href="/flights/delete/<%=x["id"]%>"><li>delete</li></a>
         <a class="tab col s4" href="https://www.skyscanner.com/transport/flights/<%=x.origin_iata_code%>/<%=x.return_iata_code%>/<%=x.origin_date%>/rtn=0" target="_blank"><li>more details</li></a>
         <a class="tab col s4" href="https://www.skyscanner.com/car-rental?pick_up=<%=x.return_iata_code%>&pick_up_date=<%=x.origin_date%>" target="_blank"><li>Car rental on arrival</li></a>
-        
       </ul>
+        <form action="/delete/<%=x["id"]%>" method="post">
+        <input id="hidden" type="hidden" name="_method" value="delete">
+        <input class="btn" value="delete" type="submit">
+        </form>
     </div>
     <div class="card-content grey lighten-4 center">
       <div id="test4" class="col s12"></div>

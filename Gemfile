@@ -12,6 +12,7 @@ gem 'httparty'
 gem 'unsplash'
 gem 'puma'
 gem 'pg'
+gem 'pry'
 
 
 group :development do

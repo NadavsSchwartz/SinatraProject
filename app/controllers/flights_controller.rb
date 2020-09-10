@@ -29,6 +29,7 @@ class FlightController < ApplicationController
       flash.now[:error] = "That flight doesn't exist!, Please go back and try again :)"
     end
   end
+
   post '/flights/:id' do
     if current_user.nil? || @flight = find_flight_by_id.nil?
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
@@ -40,7 +41,7 @@ class FlightController < ApplicationController
     end
   end
 
-  get '/flights/edit/:id' do
+  get '/flights/:id/edit' do
     if current_user.nil? || !current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
       flash[:error] = 'You need to be logged in and have the flight added to your account, in order to see/edit/delete flights'
     else
@@ -50,7 +51,7 @@ class FlightController < ApplicationController
     end
   end
 
-  post '/flights/update/:id' do
+  patch '/flights/:id' do
     origin = params[:origin].split(' ,')[1]
     destination = params[:destination].split(' ,')[1]
     @flights = Flight.get_flight(origin, destination, params[:depart_date])
@@ -70,14 +71,14 @@ class FlightController < ApplicationController
        end
   end
 
-  get '/flights/delete/:id' do
+  delete '/flights/:id' do
     # validate that user is logged in & added the flight to his account & hasn't deleted it already
     if !logged_in?
       flash[:error] = 'You need to be logged in, in order to edit/delete flights'
     else
       if current_user.carts.find_by(user_id: current_user.id, flight_id: params[:id])
         if current_user.flights.ids.include? params[:id].to_i
-          flight = find_flight_by_id
+          @flight = find_flight_by_id
           flight.destroy
           flash.now[:error] = 'Flight deleted.'
           redirect to '/users/account'
@@ -89,4 +90,9 @@ class FlightController < ApplicationController
         end
     end
   end
+
+  private 
+  def find_flight_by_id
+       @flight = Flight.find_by(id: params[:id])
+    end
 end

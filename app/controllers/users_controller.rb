@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   get '/users/register' do
     if logged_in?
-      flash.now[:error] = "You're already logged in "
+      flash[:error] = "You're already logged in "
       redirect to '/users/account'
     else
       erb :'users/register'
@@ -9,13 +9,12 @@ class UsersController < ApplicationController
   end
 
   post '/users/register' do
-    user = User.find_by(email: params[:email])
-    if !user.nil?
-      flash.now[:warning] = 'This email is already taken. Please pick a new one or log in.'
-      # redirect to '/register'
-    else
-      @user = User.create(name: params[:name], email: params[:email], password: params[:password])
+    @user = User.new(name: params[:name], email: params[:email], password: params[:password])
+    if @user.save
       redirect to '/users/login'
+    else
+      flash.now[:warning] = 'This email is already taken. Please pick a new one or log in.'
+      erb :'users/register'
     end
   end
 
@@ -34,8 +33,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/users/account'
     else
-      flash[:notice] = 'The post was successfully created'
-      redirect 'users/login', notice: 'The post was successfully created'
+      redirect 'users/login', notice: 'incorrect credentials'
    end
   end
 
