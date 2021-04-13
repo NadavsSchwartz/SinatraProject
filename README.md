@@ -4,10 +4,23 @@
 The theme for the project is a flight search engine with user functionality, where you can add flights to your profile for easy tracking.
 
 ## Live Demo:
-You can see a live demo here: http://www.nadavs.net
+You can see a live demo here: https://travelwallet.herokuapp.com/
+
+## Features
+* Uses Skyscanner's API for airport autocomplete data, [free tier provide limited data]
+* Uses Skyscanner's API for flight search [ free tier allowes only one way flight and 1 passanger query and limited data]
+* Allows for user authentication and authorizes users with ActiveRecord
+* Users can add and edit flights that were added to their wallet/profile
+* Autocomplete for airports
+
+## Tech Used
+* Ruby
+* Sinatra 
+* Materialize CSS Framework
+* Active Record
+
+
 
 ## License
-The gem is available as open source under the terms of the MIT License.
+MIT License.
 
-## Code of Conduct
-Everyone interacting in the CupcakeRecipes project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the code of conduct.
